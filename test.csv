@@ -1,0 +1,11 @@
+,id,target,response,type,spelling_score
+0,20,window,window,word,0.0
+1,21,provide,proe,word,0.42857142857142855
+2,22,greet,great,word,0.2
+3,23,though,though,word,0.0
+4,24,poem,poem,word,0.0
+5,25,absent,absent,word,0.0
+6,26,grief,great,word,0.6
+7,27,happy,happy,word,0.0
+8,28,strict,strict,word,0.0
+9,29,faith,gace,word,0.8

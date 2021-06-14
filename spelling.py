@@ -51,9 +51,11 @@ def spellingdistance(FILE):
     DF['target'] = DF['target'].str.replace(" ", "")
     DF['response'] = DF['response'].str.replace(" ", "")
     NW = DF[DF.type == "nonword"]
+    if NW.empty == False:
+        NW['spelling_score'] = NW.apply(rdlevenshteinphonetics, axis=1)
     W = DF[DF.type == "word"]
-    NW['spelling_score'] = NW.apply(rdlevenshteinphonetics, axis=1)
-    W['spelling_score'] = W.apply(rdlevenshtein, axis=1)
+    if W.empty == False:
+        W['spelling_score'] = W.apply(rdlevenshtein, axis=1)
     newdf = pd.concat([NW, W], axis=0)
     return newdf
 
