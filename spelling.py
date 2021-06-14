@@ -38,8 +38,22 @@ def rdlevenshtein(row):
     return levenshtein(str(row['target']), str(row['response']))
 
 
+def replacest(text):
+    text = text.replace(" ", "")
+    text = text.replace("\n", "")
+    text = text.replace("ˈ", "")
+    text = text.replace("ː", "")
+    text = text.replace("ˌ", "")
+    print(text)
+    return text
+
+
 def rdlevenshteinphonetics(row):
-    return levenshtein(phonetic(str(row['target'])), phonetic(str(row['response'])))
+    t = phonetic(str(row['target']))
+    t1 = replacest(t)
+    r = phonetic(str(row['response']))
+    r1 = replacest(r)
+    return levenshtein(t1, r1)
 
 
 def spellingdistance(FILE):
@@ -50,13 +64,14 @@ def spellingdistance(FILE):
     DF['type'] = DF.type.str.lower()
     DF['target'] = DF['target'].str.replace(" ", "")
     DF['response'] = DF['response'].str.replace(" ", "")
+    EMPTY = DF[DF.response == ""]
     NW = DF[DF.type == "nonword"]
+    W = DF[DF.type == "word"]
     if NW.empty == False:
         NW['spelling_score'] = NW.apply(rdlevenshteinphonetics, axis=1)
-    W = DF[DF.type == "word"]
     if W.empty == False:
         W['spelling_score'] = W.apply(rdlevenshtein, axis=1)
-    newdf = pd.concat([NW, W], axis=0)
+    newdf = pd.concat([NW, W, EMPTY], axis=0)
     return newdf
 
 
