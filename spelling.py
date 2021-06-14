@@ -44,7 +44,6 @@ def replacest(text):
     text = text.replace("ˈ", "")
     text = text.replace("ː", "")
     text = text.replace("ˌ", "")
-    print(text)
     return text
 
 
@@ -64,6 +63,7 @@ def spellingdistance(FILE):
     DF['type'] = DF.type.str.lower()
     DF['target'] = DF['target'].str.replace(" ", "")
     DF['response'] = DF['response'].str.replace(" ", "")
+    DF['type'] = DF['type'].str.replace(" ", "")
     EMPTY = DF[DF.response == ""]
     NW = DF[DF.type == "nonword"]
     W = DF[DF.type == "word"]

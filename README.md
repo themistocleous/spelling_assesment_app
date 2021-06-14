@@ -3,6 +3,9 @@
 
 The evaluation of spelling performance in aphasia reveals deficits in written language and can facilitate the design of targeted writing treatments. Nevertheless, manual scoring of spelling performance is time-consuming, laborious, and error prone. Here we provide a code that scores spelling errors based on the normalized Damerau–Levenshtein distance, for both words and non words.
 
+# Updated
+Jun 14 2021: Stress and quantity symbols automatically inserted from the IPA transcription system and affected non-word scoring have been removed in this version.
+
 # Using the code
 
 ## Prerequisites
