@@ -66,7 +66,7 @@ def spellingdistance(FILE):
     DF['type'] = DF['type'].str.replace(" ", "")
     DF['target'] = DF['target'].str.strip()
     DF['response'] = DF['response'].str.strip()
-    DF['type'] = DF['type'].str.
+    DF['type'] = DF['type'].str.strip()
     EMPTY = DF[DF.response.isna()]
     DF = DF[DF.response.notnull()]
     NW = DF[DF.type == "nonword"]
