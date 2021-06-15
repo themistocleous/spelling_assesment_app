@@ -39,11 +39,11 @@ def rdlevenshtein(row):
 
 
 def replacest(text):
-    text = text.replace(" ", "")
-    text = text.replace("\n", "")
-    text = text.replace("ˈ", "")
-    text = text.replace("ː", "")
-    text = text.replace("ˌ", "")
+    text = text.strip()
+    chars = " ˌːˈ\n"
+    for symb in text:
+        if symb in chars:
+            text = text.replace(symb, "")
     return text
 
 
@@ -64,13 +64,18 @@ def spellingdistance(FILE):
     DF['target'] = DF['target'].str.replace(" ", "")
     DF['response'] = DF['response'].str.replace(" ", "")
     DF['type'] = DF['type'].str.replace(" ", "")
-    EMPTY = DF[DF.response == ""]
+    DF['target'] = DF['target'].str.strip()
+    DF['response'] = DF['response'].str.strip()
+    DF['type'] = DF['type'].str.strip()
+    EMPTY = DF[DF.response.isna()]
+    DF = DF[DF.response.notnull()]
     NW = DF[DF.type == "nonword"]
     W = DF[DF.type == "word"]
     if NW.empty == False:
         NW['spelling_score'] = NW.apply(rdlevenshteinphonetics, axis=1)
     if W.empty == False:
         W['spelling_score'] = W.apply(rdlevenshtein, axis=1)
+    EMPTY['spelling_score'] = "NA"
     newdf = pd.concat([NW, W, EMPTY], axis=0)
     return newdf
 
